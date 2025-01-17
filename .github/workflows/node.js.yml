@@ -66,6 +66,25 @@ jobs:
     - name: Generate Package Lock File
       run: npm install --package-lock-only
 
+       # Run OWASP Dependency Check
+    - name: Run OWASP Dependency Check
+      run: |
+        dependency-check/dependency-check/bin/dependency-check.sh \
+          --scan . \
+          --format "ALL" \
+          --out ./owasp-report \
+          --failOnCVSS 5 \
+          --disableAssembly \
+          --suppression suppressions.xml || true
+
+    # Upload OWASP Reports
+    - name: Upload OWASP Reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: OWASP Dependency Check Report
+        path: ./owasp-report
+        
+
     # Build the Source Code
     - name: Build the Source Code
       run: |
