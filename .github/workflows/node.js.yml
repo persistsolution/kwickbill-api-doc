@@ -98,6 +98,23 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+         # Build and Push Docker Image
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/kwickbill-api-prod:latest
+
+    # Deploy the Docker container
+    - name: Deploy Docker Container
+      run: |
+        docker pull ${{ secrets.DOCKER_USERNAME }}/kwickbill-api-prod:latest
+        docker stop kwickbill-api-prod || true
+        docker rm kwickbill-api-prod || true
+        docker run -d --name kwickbill-api-prod -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/kwickbill-api-prod:latest
+
     # Restart Application with PM2
     - name: Restart Application with PM2
       run: |
