@@ -25,6 +25,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Install Tools
       run: |
         # Ensure unzip is installed
         if ! command -v unzip &> /dev/null; then
@@ -52,7 +53,7 @@ jobs:
         bun install
 
     # Run OWASP Dependency Check
-    - name: Run OWASP Dependency Check & Upload Reports
+    - name: Run OWASP Dependency Check
       run: |
         dependency-check/dependency-check/bin/dependency-check.sh \
           --scan . \
@@ -61,7 +62,6 @@ jobs:
           --failOnCVSS 5 \
           --disableAssembly \
           --suppression suppressions.xml || true
-      
     - name: Upload OWASP Reports
       uses: actions/upload-artifact@v4
       with:
@@ -75,6 +75,11 @@ jobs:
         bun build index.ts --if-present
 
     # Build and push Docker image
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v5
       with:
