@@ -85,3 +85,11 @@ jobs:
         pm2 save
         # List all PM2 processes
         pm2 list
+   # Run Trivy File System Scan
+    - name: Run Trivy File System Scan
+      run: |
+        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
+        export PATH=$PATH:$(pwd)/bin
+        trivy fs --exit-code 0 --severity MEDIUM,HIGH,CRITICAL .
+        trivy fs --exit-code 1 --severity CRITICAL .
+      shell: bash
