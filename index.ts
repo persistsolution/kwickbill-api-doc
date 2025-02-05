@@ -21,6 +21,10 @@ app.use(employeeRoute);
 app.use(productRoute);
 app.use(franchiseRoute);
 
+
+// Enable CORS for specific origin
+app.use(cors({
+  origin: 'http://13.234.213.24:5173', // Allow requests from this origin
  }));
 
 
