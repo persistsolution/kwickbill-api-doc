@@ -21,14 +21,11 @@ app.use(employeeRoute);
 app.use(productRoute);
 app.use(franchiseRoute);
 
-// Enable CORS for specific origin
-app.use(cors({
-  origin: 'http://13.234.213.24:5173', // Allow requests from this origin
  }));
 
 
  app.get("/", (req, res) => {
-  res.send("Welcome to Kwickbill Staging Test");
+  res.send("Welcome to Kwickbill Staging");
 });
 
 app.listen(port,'0.0.0.0', () => {
