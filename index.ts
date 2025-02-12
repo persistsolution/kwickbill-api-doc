@@ -28,7 +28,7 @@ app.use(cors({
 
 
  app.get("/", (req, res) => {
-  res.send("Welcome to Kwickbill Testing New");
+  res.send("Welcome to Kwickbill Testing");
 });
 
 app.listen(port,'0.0.0.0', () => {
