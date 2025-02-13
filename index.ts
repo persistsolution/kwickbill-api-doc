@@ -22,13 +22,13 @@ app.use(franchiseRoute);
 
 // Enable CORS for specific origin
 app.use(cors({
-  origin: 'http://13.234.213.24:5173', // Allow requests from this origin
+  origin: 'http://43.205.240.13:5173', // Allow requests from this origin
  }));
 
  app.get("/", (req, res) => {
-  res.send("Welcome to Kwickbill Production ");
+  res.send("Welcome to Kwickbill Production");
 });
 
 app.listen(port, () => {
-  console.log(`Server running at 13.235.243.151:${port}`);
+  console.log(`Server running at http://43.205.240.13:${port}`);
 });
