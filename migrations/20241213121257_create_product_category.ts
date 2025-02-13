@@ -2,29 +2,29 @@ import type { Knex } from "knex";
 
 
 export async function up(knex: Knex): Promise<void> {
-    return knex.schema.createTable('tbl_cust_category', function(table) {
+    return knex.schema.createTable('tbl_cust_category_2025', function(table) {
         table.increments('id').primary(); // Auto-incrementing primary key
-        table.string('Name').nullable();
-        table.string('Icon').nullable();
-        table.string('Photo').nullable();
-        table.string('Photo2').nullable();
-        table.integer('Featured').nullable();
-        table.integer('ProdType').nullable();
-        table.integer('Status').nullable();
-        table.string('srno').nullable();
-        table.timestamp('CreatedDate').nullable(); // ISO 8601 format
-        table.timestamp('ModifiedDate').nullable();
-        table.integer('Roll').nullable();
-        table.integer('CreatedBy').nullable();
-        table.string('push_flag').nullable().defaultTo(0);
-        table.string('delete_flag').nullable().defaultTo(0);
-        table.timestamp('modified_time').nullable(); // Optional and nullable
-        table.string('ModifiedBy').nullable();
+        table.string('Name', 100).notNullable().collate('utf8mb4_general_ci');
+        table.string('Icon', 100).collate('utf8mb4_general_ci').nullable();
+        table.string('Photo', 100).collate('utf8mb4_general_ci').nullable();
+        table.string('Photo2', 255).collate('utf8mb4_general_ci').nullable();
+        table.boolean('Featured').notNullable().defaultTo(0);
+        table.integer('ProdType').notNullable().comment('0:custcat; 1:rawcat;');
+        table.integer('Status').notNullable().defaultTo(1);
+        table.float('srno', 14, 1).notNullable();
+        table.dateTime('CreatedDate').notNullable();
+        table.dateTime('ModifiedDate').nullable();
+        table.integer('Roll').notNullable().defaultTo(1);
+        table.integer('CreatedBy').notNullable();
+        table.integer('ModifiedBy').notNullable();
+        table.boolean('push_flag').notNullable();
+        table.boolean('delete_flag').notNullable();
+        table.dateTime('modified_time', { precision: 3 }).nullable();
       });
 }
 
 
 export async function down(knex: Knex): Promise<void> {
-    return knex.schema.dropTableIfExists('tbl_cust_category');
+    return knex.schema.dropTableIfExists('tbl_cust_category_2025');
 }
 

@@ -13,11 +13,11 @@
     "paths": {
       "@models/*": ["models/*"],
       "@controllers/*": ["controllers/*"],
-      "@routes/*": ["routes/*"]
+      "@routes/*": ["routes/*"],
+      "@services/*": ["services/*"]
     }
   },
   // "include": ["src/**/*"],
   "include": ["src/**/*", "migrations/*/", "seeds/*/","knexfile.ts","index.ts",],
   "exclude": ["node_modules"]
 }
-

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import { create, destroy, get, edit, update} from "../../../models/billsoftadmin/selling-product/category-model";
+import { create, destroy, get, edit, update,getList} from "@services/billsoftadmin/selling-product/category-service";
 export const getController = async (req: Request, res: Response): Promise<void> => {
     try {
-      const listed = await get();
+      const listed = await get(Number(req.params.ProdType));
       res.json(listed);
     } catch (error) {
       console.error("Error fetching Category:", error);
-      res.status(500).json({ message: error });
+      res.status(500).json({ message: "Failed to fetch Category" });
     }
   };
 
@@ -62,6 +62,16 @@ export const deleteController = async (req: Request, res: Response): Promise<voi
   } catch (error) {
     console.error("Error deleting Category:", error);
     res.status(500).json({ message: "Failed to delete Category" });
+  }
+};
+
+export const getListController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const listed = await getList(Number(req.params.ProdType));
+    res.json(listed);
+  } catch (error) {
+    console.error("Error fetching Category:", error);
+    res.status(500).json({ message: "Failed to fetch Category" });
   }
 };
   

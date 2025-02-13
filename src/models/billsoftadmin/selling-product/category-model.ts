@@ -1,50 +1,48 @@
-import { DataTypes, Model, Optional, QueryTypes } from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from "../../../config/sequelize";
-import {db} from "../../../config/knexconfig";
-//import { Category } from "./Category";
 
 // Define Category attributes
 export interface CategoryAttributes {
     id: number;
     Name: string;
-    Icon: string;
-    Photo: string;
-    Photo2: string;
+    Icon?: string | null;
+    Photo?: string | null;
+    Photo2?: string | null;
     Featured: number;
     ProdType: number;
     Status: number;
     srno: number;
-    CreatedDate: string;
-    ModifiedDate: string;
+    CreatedDate: Date;
+    ModifiedDate?: Date | null;
     Roll: number;
     CreatedBy: number;
+    ModifiedBy: number;
     push_flag: boolean;
     delete_flag: boolean;
-    modified_time?: string | null;
+    modified_time?: Date | null;
 }
 
-interface CategoryCreationAttributes extends Optional<CategoryAttributes, 'id'> { }
+export interface CategoryCreationAttributes extends Optional<CategoryAttributes, 'id'> { }
 
 // Define the Category model
-export class Category
-    extends Model<CategoryAttributes, CategoryCreationAttributes>
-    implements CategoryAttributes {
+class Category extends Model<CategoryAttributes, CategoryCreationAttributes> implements CategoryAttributes {
     public id!: number;
     public Name!: string;
-    public Icon!: string;
-    public Photo!: string;
-    public Photo2!: string;
+    public Icon?: string | null;
+    public Photo?: string | null;
+    public Photo2?: string | null;
     public Featured!: number;
     public ProdType!: number;
     public Status!: number;
     public srno!: number;
-    public CreatedDate!: string;
-    public ModifiedDate!: string;
+    public CreatedDate!: Date;
+    public ModifiedDate?: Date | null;
     public Roll!: number;
     public CreatedBy!: number;
+    public ModifiedBy!: number;
     public push_flag!: boolean;
     public delete_flag!: boolean;
-    public modified_time?: string | null;
+    public modified_time?: Date | null;
 
     // Timestamps
     public readonly createdAt!: Date;
@@ -60,29 +58,38 @@ Category.init(
             primaryKey: true,
         },
         Name: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
         },
         Icon: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
+            allowNull: true,
         },
         Photo: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
+            allowNull: true,
         },
         Photo2: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
+            allowNull: true,
         },
         Featured: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TINYINT,
+            allowNull: false,
+            defaultValue: 0,
         },
         ProdType: {
             type: DataTypes.INTEGER,
+            allowNull: false,
         },
         Status: {
             type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
         },
         srno: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT(14, 1),
+            allowNull: false,
         },
         CreatedDate: {
             type: DataTypes.DATE,
@@ -90,143 +97,39 @@ Category.init(
         },
         ModifiedDate: {
             type: DataTypes.DATE,
+            allowNull: true,
         },
         Roll: {
             type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
         },
         CreatedBy: {
             type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        ModifiedBy: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
         },
         push_flag: {
             type: DataTypes.BOOLEAN,
+            allowNull: false,
         },
         delete_flag: {
             type: DataTypes.BOOLEAN,
+            allowNull: false,
         },
         modified_time: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATE(3),
             allowNull: true,
         },
     },
     {
         sequelize,
-        tableName: "tbl_cust_category",
+        tableName: "tbl_cust_category_2025",
         timestamps: false,
     }
 );
 
-
-export const get = async (): Promise<Category[]> => {
-    return Category.findAll();
-};
-
-export const create = async (
-    saveRecord: CategoryCreationAttributes
-): Promise<Category> => {
-    try {
-        const newRecord = await Category.create(saveRecord);
-        console.log("newRecord--------", newRecord);
-        return newRecord;
-    } catch (error) {
-        console.error("Error creating Category:", error);
-        throw error;
-    }
-};
-
-//Get product by ID
-export const edit = async (id: number): Promise<Category | null> => {
-    return await Category.findByPk(id);
-};
-
-
-// Function to edit a category
-// export const edit = async (id: number): Promise<Category | null> => {
-//     try {
-//         // Query the database and explicitly type the result
-//         const categoryData: CategoryAttributes[] = await sequelize.query(
-//             "CALL updateProdCategory(:id)",
-//             {
-//                 replacements: { id },
-//                 type: QueryTypes.SELECT,
-//             }
-//         );
-
-//         // Log categoryData to verify what is returned
-//         console.log('categoryData:', categoryData);
-
-//         // Check if categoryData is undefined or empty
-//         if (!categoryData || categoryData.length === 0) {
-//             console.log('No category data returned from the stored procedure');
-//             return null;  // Return null if no data is found
-//         }
-
-//         const category = categoryData[0];  // Get the first item if it's an array
-//         console.log('Invalid category data', category);
-//         // Ensure the category has the correct structure
-//         if (!category.id || !category.Name) {
-//             console.log('Invalid category data', category);
-//             return null;  // Return null if essential fields are missing
-//         }
-
-//         // Map categoryData to CategoryCreationAttributes
-//         const categoryCreationAttributes = {
-//             id: category.id,
-//             Name: category.Name,
-//             Icon: category.Icon,
-//             Photo: category.Photo,
-//             Photo2: category.Photo2,
-//             Featured: category.Featured,
-//             ProdType: category.ProdType,
-//             Status: category.Status,
-//             srno: category.srno,
-//             CreatedDate: category.CreatedDate,
-//             ModifiedDate: category.ModifiedDate,
-//             Roll: category.Roll,
-//             CreatedBy: category.CreatedBy,
-//             push_flag: category.push_flag,
-//             delete_flag: category.delete_flag,
-//             modified_time: category.modified_time || null,
-//         };
-
-//         // Build and return the Category instance
-//         return Category.build(categoryCreationAttributes as any);
-//     } catch (error) {
-//         console.error("Error fetching category by ID:", error);
-//         throw error;
-//     }
-// };
-
-//  export const edit = async (id: number) => {
-//     try {
-//       // Call stored procedure using knexInstance.raw()
-//       const result = await db.raw('CALL updateProdCategory(?)', [id]);
-//       console.log('Category Data:', result[0]);
-//       if (result && result[0]) {
-//         console.log('Category Data:', result[0]);
-//         return result[0];  // Assuming result[0] contains the data
-//       } else {
-//         console.log('No data returned from stored procedure.');
-//         return null;
-//       }
-//     } catch (error) {
-//       console.error('Error calling stored procedure:', error);
-//       throw error;
-//     }
-//   };
-
-export const update = async (
-    id: number,
-    updates: Partial<CategoryAttributes>
-): Promise<Category | null> => {
-    const [rowsAffected, [updatedRecord]] = await Category.update(updates, {
-        where: { id },
-        returning: true,
-    });
-    return rowsAffected > 0 ? updatedRecord : null;
-};
-
-export const destroy = async (id: number): Promise<boolean> => {
-    const deletedCount = await Category.destroy({ where: { id } });
-    return deletedCount > 0;
-};
-
+export { Category }; // Export separately

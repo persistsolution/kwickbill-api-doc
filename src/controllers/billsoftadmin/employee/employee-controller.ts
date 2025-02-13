@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { create, destroy, get, edit, update} from "../../../models/billsoftadmin/employee/employee-model";
+import { create, destroy, get, edit, update} from "@models/billsoftadmin/employee/employee-model";
 // Get all Employee
 export const getController = async (req: Request, res: Response): Promise<void> => {
     try {

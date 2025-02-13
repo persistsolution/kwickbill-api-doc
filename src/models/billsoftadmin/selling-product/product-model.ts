@@ -1,11 +1,12 @@
-import { DataTypes, Model, Optional } from 'sequelize';
-import { sequelize } from '../../../config/sequelize'; // Adjust path to your Sequelize instance
+import { DataTypes, Model, Optional } from "sequelize";
+import { sequelize } from "../../../config/sequelize"; // Adjust path as needed
 
 // Interface for Product attributes
 interface ProductAttributes {
     id: number;
     ProdId: number;
     ProductName?: string | null;
+    BrandId: number;
     CatId: number;
     SubCatId: string;
     CgstPer?: string | null;
@@ -17,7 +18,7 @@ interface ProductAttributes {
     GstAmt?: number | null;
     ProdPrice?: number | null;
     MinPrice?: number | null;
-    Status: string;
+    Status: number; // Changed from BOOLEAN to SMALLINT
     SrNo?: number | null;
     Photo?: string | null;
     code?: string | null;
@@ -28,31 +29,31 @@ interface ProductAttributes {
     BarcodeNo?: string | null;
     StockQty: number;
     TempPrdId: number;
-    Display: boolean;
-    push_flag: boolean;
-    delete_flag: boolean;
+    Display: number; // Changed from BOOLEAN to SMALLINT
+    push_flag: number;
+    delete_flag: number;
     modified_time?: Date | null;
-    ProdType: string;
+    ProdType: number;
     Qty?: string | null;
     Unit?: string | null;
-    Transfer: boolean;
-    Assets: boolean;
+    Transfer: number;
+    Assets: number;
     QrDisplay: string;
     MinQty?: string | null;
-    ProdType2: boolean;
+    ProdType2: number;
     PurchasePrice?: number | null;
-    checkstatus: boolean;
-    tempstatus: boolean;
+    checkstatus: number;
+    tempstatus: number;
 }
 
 // Define attributes for Product creation (all fields except `id` are optional)
-interface ProductCreationAttributes extends Optional<ProductAttributes, 'id'> {}
+interface ProductCreationAttributes extends Optional<ProductAttributes, "id"> {}
 
-// Define the Product model class
 export class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
     public id!: number;
     public ProdId!: number;
     public ProductName?: string | null;
+    public BrandId!: number;
     public CatId!: number;
     public SubCatId!: string;
     public CgstPer?: string | null;
@@ -64,7 +65,7 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     public GstAmt?: number | null;
     public ProdPrice?: number | null;
     public MinPrice?: number | null;
-    public Status!: string;
+    public Status!: number;
     public SrNo?: number | null;
     public Photo?: string | null;
     public code?: string | null;
@@ -75,21 +76,21 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     public BarcodeNo?: string | null;
     public StockQty!: number;
     public TempPrdId!: number;
-    public Display!: boolean;
-    public push_flag!: boolean;
-    public delete_flag!: boolean;
+    public Display!: number;
+    public push_flag!: number;
+    public delete_flag!: number;
     public modified_time?: Date | null;
-    public ProdType!: string;
+    public ProdType!: number;
     public Qty?: string | null;
     public Unit?: string | null;
-    public Transfer!: boolean;
-    public Assets!: boolean;
+    public Transfer!: number;
+    public Assets!: number;
     public QrDisplay!: string;
     public MinQty?: string | null;
-    public ProdType2!: boolean;
+    public ProdType2!: number;
     public PurchasePrice?: number | null;
-    public checkstatus!: boolean;
-    public tempstatus!: boolean;
+    public checkstatus!: number;
+    public tempstatus!: number;
 }
 
 // Initialize the model
@@ -98,19 +99,20 @@ Product.init(
         id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
         ProdId: { type: DataTypes.INTEGER, allowNull: false },
         ProductName: { type: DataTypes.STRING, allowNull: true },
+        BrandId: { type: DataTypes.INTEGER, allowNull: false },
         CatId: { type: DataTypes.INTEGER, allowNull: false },
-        SubCatId: { type: DataTypes.STRING, allowNull: false },
+        SubCatId: { type: DataTypes.STRING, allowNull: false, defaultValue: "0" },
         CgstPer: { type: DataTypes.STRING, allowNull: true },
         SgstPer: { type: DataTypes.STRING, allowNull: true },
         IgstPer: { type: DataTypes.STRING, allowNull: true },
-        CgstAmt: { type: DataTypes.FLOAT, allowNull: true },
-        SgstAmt: { type: DataTypes.FLOAT, allowNull: true },
-        IgstAmt: { type: DataTypes.FLOAT, allowNull: true },
-        GstAmt: { type: DataTypes.FLOAT, allowNull: true },
-        ProdPrice: { type: DataTypes.FLOAT, allowNull: true },
-        MinPrice: { type: DataTypes.FLOAT, allowNull: true },
-        Status: { type: DataTypes.STRING, allowNull: false },
-        SrNo: { type: DataTypes.INTEGER, allowNull: true },
+        CgstAmt: { type: DataTypes.FLOAT(14, 2), allowNull: true },
+        SgstAmt: { type: DataTypes.FLOAT(14, 2), allowNull: true },
+        IgstAmt: { type: DataTypes.FLOAT(14, 2), allowNull: true },
+        GstAmt: { type: DataTypes.FLOAT(14, 2), allowNull: true },
+        ProdPrice: { type: DataTypes.FLOAT(14, 2), allowNull: true },
+        MinPrice: { type: DataTypes.FLOAT(14, 2), allowNull: true },
+        Status: { type: DataTypes.SMALLINT, allowNull: false, defaultValue: 1 },
+        SrNo: { type: DataTypes.FLOAT(14, 2), allowNull: true },
         Photo: { type: DataTypes.STRING, allowNull: true },
         code: { type: DataTypes.STRING, allowNull: true },
         CreatedDate: { type: DataTypes.DATE, allowNull: true },
@@ -120,59 +122,28 @@ Product.init(
         BarcodeNo: { type: DataTypes.STRING, allowNull: true },
         StockQty: { type: DataTypes.INTEGER, allowNull: false },
         TempPrdId: { type: DataTypes.INTEGER, allowNull: false },
-        Display: { type: DataTypes.BOOLEAN, allowNull: false },
-        push_flag: { type: DataTypes.BOOLEAN, allowNull: false },
-        delete_flag: { type: DataTypes.BOOLEAN, allowNull: false },
-        modified_time: { type: DataTypes.DATE, allowNull: true },
-        ProdType: { type: DataTypes.STRING, allowNull: false },
-        Qty: { type: DataTypes.STRING, allowNull: true },
-        Unit: { type: DataTypes.STRING, allowNull: true },
-        Transfer: { type: DataTypes.BOOLEAN, allowNull: false },
-        Assets: { type: DataTypes.BOOLEAN, allowNull: false },
-        QrDisplay: { type: DataTypes.STRING, allowNull: false },
-        MinQty: { type: DataTypes.STRING, allowNull: true },
-        ProdType2: { type: DataTypes.BOOLEAN, allowNull: false },
-        PurchasePrice: { type: DataTypes.FLOAT, allowNull: true },
-        checkstatus: { type: DataTypes.BOOLEAN, allowNull: false },
-        tempstatus: { type: DataTypes.BOOLEAN, allowNull: false },
+        Display: { type: DataTypes.SMALLINT, allowNull: false, defaultValue: 1 },
+        push_flag: { type: DataTypes.SMALLINT, allowNull: false, defaultValue: 0 },
+        delete_flag: { type: DataTypes.SMALLINT, allowNull: false, defaultValue: 0 },
+        modified_time: { type: DataTypes.DATE(3), allowNull: true },
+        ProdType: { type: DataTypes.INTEGER, allowNull: false },
+        Qty: { type: DataTypes.STRING(100), allowNull: true },
+        Unit: { type: DataTypes.STRING(100), allowNull: true },
+        Transfer: { type: DataTypes.SMALLINT, allowNull: false, defaultValue: 0 },
+        Assets: { type: DataTypes.SMALLINT, allowNull: false, defaultValue: 0 },
+        QrDisplay: { type: DataTypes.STRING(10), allowNull: false, defaultValue: "No" },
+        MinQty: { type: DataTypes.STRING(50), allowNull: true },
+        ProdType2: { type: DataTypes.SMALLINT, allowNull: false, defaultValue: 0 },
+        PurchasePrice: { type: DataTypes.FLOAT(14, 2), allowNull: true },
+        checkstatus: { type: DataTypes.SMALLINT, allowNull: false, defaultValue: 0 },
+        tempstatus: { type: DataTypes.SMALLINT, allowNull: false, defaultValue: 0 },
     },
     {
         sequelize,
-        tableName: 'tbl_cust_products',
-        timestamps: false, // Adjust if your table has createdAt/updatedAt fields
+        tableName: "tbl_cust_products2",
+        timestamps: false, // No createdAt/updatedAt fields
     }
 );
 
+export { ProductAttributes, ProductCreationAttributes };
 
-// Get all products
-export const get = async (): Promise<Product[]> => {
-    return await Product.findAll();
-};
-
-// Create a product
-export const create = async (saveRecord: ProductCreationAttributes): Promise<Product> => {
-    const newRecord = await Product.create(saveRecord);
-    console.log('New Product:', newRecord.toJSON());
-    return newRecord;
-};
-
-// Get product by ID
-export const edit = async (id: number): Promise<Product | null> => {
-    return await Product.findByPk(id);
-};
-
-// Update product by ID
-export const update = async (id: number, updates: Partial<Product>): Promise<Product | null> => {
-    const product = await Product.findByPk(id);
-    if (product) {
-        await product.update(updates);
-        return product;
-    }
-    return null;
-};
-
-// Delete product by ID
-export const destroy = async (id: number): Promise<boolean> => {
-    const deletedCount = await Product.destroy({ where: { id } });
-    return deletedCount > 0;
-};

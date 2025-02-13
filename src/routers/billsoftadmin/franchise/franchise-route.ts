@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { createController, deleteController, getController, editController, updateController } from '../../../controllers/billsoftadmin/franchise/franchise-controller';
+import { createController, deleteController, getController, editController, updateController } from '@controllers/billsoftadmin/franchise/franchise-controller';
 
 const router = Router();
 
-router.get('/franchise/get/:roll', getController);
+router.get('/franchise/get/:Roll', getController);
 router.post("/franchise/create", createController);
 router.get("/franchise/edit/:id", editController);
 router.put("/franchise/update/:id", updateController);
