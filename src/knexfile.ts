@@ -1,13 +1,14 @@
 import type { Knex } from 'knex';
+import 'dotenv/config';
 
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'pg', // PostgreSQL client
     connection: {
-      host: 'database-4.crq6yqcualdr.ap-south-1.rds.amazonaws.com',
-      user: 'postgres',
-      password: 'Rd9595454907',
-      database: 'kwickbill_dev',
+      host: process.env.DEV_DB_HOST,
+      user: process.env.DEV_DB_USER,
+      password: process.env.DEV_DB_PASSWORD,
+      database: process.env.DEV_DB_NAME,
     },
     migrations: {
       directory: './migrations', // Path to migration files

@@ -12,8 +12,7 @@ import userRoute from './src/routers/billsoftadmin/users/user-route';
 import brandRoute from './src/routers/billsoftadmin/selling-product/brand-route';
 import unitRoute from './src/routers/billsoftadmin/masters/unit-route';
 const app = express();
-const port: number = Number(process.env.PORT) || 3001;
-const HOST = process.env.HOST || '0.0.0.0';
+const port = process.env.PORT || 3001;
 
 
 app.use(cors());
@@ -38,6 +37,6 @@ app.use(cors({
   res.send("Welcome to Kwickbill Development ");
 });
 
-app.listen(port,'0.0.0.0', () => {
-  console.log(`Server running at http://43.205.240.13:${port}`);
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });

@@ -4,11 +4,11 @@ const config = {
   development: {
     client: 'pg', // Use PostgreSQL as the database client
     connection: {
-      host: process.env.DB_HOST || 'database-4.crq6yqcualdr.ap-south-1.rds.amazonaws.com', // Host from environment or default to localhost
-      user: process.env.DB_USER || 'postgres', // Database username
-      password: process.env.DB_PASSWORD || 'Rd9595454907', // Database password
-      database: process.env.DB_NAME || 'kwickbill_dev', // Database name
-      port: Number(process.env.DB_PORT) || 5432, // Port number
+      host: process.env.DEV_DB_HOST || 'localhost', // Host from environment or default to localhost
+      user: process.env.DEV_DB_USER || 'postgres', // Database username
+      password: process.env.DEV_DB_PASSWORD || 'pgrajat', // Database password
+      database: process.env.DEV_DB_NAME || 'kwickbill', // Database name
+      port: Number(process.env.PORT) || 5432, // Port number
     },
     migrations: {
       directory: './migrations', // Directory for migration files
@@ -17,24 +17,7 @@ const config = {
     seeds: {
       directory: './seeds', // Directory for seed files
     },
-  },
-  production: {
-    client: 'pg', // Production database configuration
-    connection: {
-      host: process.env.PROD_DB_HOST,
-      user: process.env.PROD_DB_USER,
-      password: process.env.PROD_DB_PASSWORD,
-      database: process.env.PROD_DB_NAME,
-      port: Number(process.env.PROD_DB_PORT) || 5432,
-    },
-    migrations: {
-      directory: './migrations',
-      extension: 'ts',
-    },
-    seeds: {
-      directory: './seeds',
-    },
-  },
+  }
 };
 
 export default config;
