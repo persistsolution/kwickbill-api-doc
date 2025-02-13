@@ -1,13 +1,12 @@
 import { knex } from "knex";
-import 'dotenv/config'; 
 
 export const db = knex({
   client: "pg",
   connection: {
-    host: process.env.DEV_DB_HOST,
-    user: process.env.DEV_DB_USER,
-    password: process.env.DEV_DB_PASSWORD,
-    database: process.env.DEV_DB_NAME,
+    host: "database-3.crq6yqcualdr.ap-south-1.rds.amazonaws.com", // Update with your DB host
+    user: "postgres", // Update with your DB username
+    password: "Rd9595454907", // Update with your DB password
+    database: "kwickbill_dev", // Update with your DB name
   },
   migrations: {
     directory: "./migrations", // Directory for migration files
