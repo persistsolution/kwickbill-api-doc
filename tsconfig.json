@@ -13,7 +13,8 @@
     "paths": {
       "@models/*": ["models/*"],
       "@controllers/*": ["controllers/*"],
-      "@routes/*": ["routes/*"]
+      "@routes/*": ["routes/*"],
+      "@services/*": ["services/*"]
     }
   },
   // "include": ["src/**/*"],
