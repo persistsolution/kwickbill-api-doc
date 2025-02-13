@@ -15,10 +15,9 @@
       "@controllers/*": ["controllers/*"],
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"]
-    }
+    },
+    "types": ["node", "knex"]  // Add "knex" explicitly here
   },
-  // "include": ["src/**/*"],
-  "include": ["src/**/*", "migrations/*/", "seeds/*/","knexfile.ts","index.ts",],
+  "include": ["src/**/*", "migrations/*/", "seeds/*/", "knexfile.ts", "index.ts"],
   "exclude": ["node_modules"]
 }
-
