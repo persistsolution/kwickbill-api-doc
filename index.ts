@@ -8,11 +8,8 @@ import subCategoryRoute from './src/routers/billsoftadmin/selling-product/subcat
 import employeeRoute from './src/routers/billsoftadmin/employee/employee-route';
 import productRoute from './src/routers/billsoftadmin/selling-product/product-route';
 import franchiseRoute from './src/routers/billsoftadmin/franchise/franchise-route';
-import userRoute from './src/routers/billsoftadmin/users/user-route';
-import brandRoute from './src/routers/billsoftadmin/selling-product/brand-route';
-import unitRoute from './src/routers/billsoftadmin/masters/unit-route';
 const app = express();
-const port: number = Number(process.env.PORT) || 3001;
+const port = process.env.PORT || 3001;
 const HOST = process.env.HOST || '0.0.0.0';
 
 
@@ -23,9 +20,6 @@ app.use(subCategoryRoute);
 app.use(employeeRoute);
 app.use(productRoute);
 app.use(franchiseRoute);
-app.use(userRoute);
-app.use(brandRoute);
-app.use(unitRoute);
 
 
 // Enable CORS for specific origin
@@ -35,7 +29,7 @@ app.use(cors({
 
 
  app.get("/", (req, res) => {
-  res.send("Welcome to Kwickbill Development");
+  res.send("Welcome to Kwickbill Developemnt");
 });
 
 app.listen(port,'0.0.0.0', () => {
