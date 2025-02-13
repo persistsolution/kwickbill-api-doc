@@ -5,9 +5,7 @@ export const sequelize = new Sequelize("kwickbill_dev", "postgres", "Rd959545490
   port: 5432,
   dialect: "postgres", // Or 'mysql' | 'mssql' | 'sqlite'
   dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false, // Change as per your requirements
-    },
+    ssl: false, // Disable SSL explicitly
   },
+  logging: false, // Optional: Disable logging
 });
