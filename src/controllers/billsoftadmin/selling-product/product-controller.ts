@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { create, destroy, get, edit, update} from "../../../models/billsoftadmin/selling-product/product-model";
+import { create, destroy, get, edit, update} from "@services/billsoftadmin/selling-product/product-services";
 // Get all Product
 export const getController = async (req: Request, res: Response): Promise<void> => {
     try {
-      const listed = await get();
+      const listed = await get(Number(req.params.ProdType));
       res.json(listed);
     } catch (error) {
       console.error("Error fetching Product:", error);
@@ -56,7 +56,7 @@ export const deleteController = async (req: Request, res: Response): Promise<voi
   try {
     const deleted = await destroy(Number(req.params.id));
     if (deleted) {
-      res.status(204).json({ message: "delete Product successfully" });
+      res.status(200).json({ message: "delete Product successfully" });
     } else {
       res.status(404).json({ message: "Product not found" });
     }
@@ -65,4 +65,5 @@ export const deleteController = async (req: Request, res: Response): Promise<voi
     res.status(500).json({ message: "Failed to delete Product" });
   }
 };
+
   
