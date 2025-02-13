@@ -4,10 +4,10 @@ const config = {
   development: {
     client: 'pg', // Use PostgreSQL as the database client
     connection: {
-      host: process.env.DB_HOST || 'database-2.crq6yqcualdr.ap-south-1.rds.amazonaws.com', // Host from environment or default to localhost
+      host: process.env.DB_HOST || 'database-4.crq6yqcualdr.ap-south-1.rds.amazonaws.com', // Host from environment or default to localhost
       user: process.env.DB_USER || 'postgres', // Database username
-      password: process.env.DB_PASSWORD || 'postgres12345', // Database password
-      database: process.env.DB_NAME || 'kwickbill_stage', // Database name
+      password: process.env.DB_PASSWORD || 'Rd9595454907', // Database password
+      database: process.env.DB_NAME || 'kwickbill_dev', // Database name
       port: Number(process.env.DB_PORT) || 5432, // Port number
     },
     migrations: {
